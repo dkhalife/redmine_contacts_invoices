@@ -49,6 +49,10 @@
     <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax_pst)} (#{tax_group[0]}%)" %>:</th>
     <th class="total_amount"> <%= price_to_currency(tax_group[1], invoice.currency)  %></th>
   </tr>
+  <tr class="total tax">
+    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax)}" %>:</th>
+    <th class="total_amount"> <%= price_to_currency(invoice.tax_amount, invoice.currency)  %></th>
+  </tr>
   <% end if invoice.tax_amount_pst> 0 %>
   
   <% if invoice.discount > 0  %>
@@ -85,6 +89,10 @@
   <tr class="total tax pst">
     <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax_pst)} (#{tax_group[0]}%)" %>:</th>
     <th class="total_amount"> <%= price_to_currency(tax_group[1], invoice.currency)  %></th>
+  </tr>
+  <tr class="total tax">
+    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax)}" %>:</th>
+    <th class="total_amount"> <%= price_to_currency(invoice.tax_amount, invoice.currency)  %></th>
   </tr>
   <% end if invoice.tax_amount_pst> 0 %>
 <% end %>

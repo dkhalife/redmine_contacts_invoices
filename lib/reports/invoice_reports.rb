@@ -209,6 +209,7 @@ module RedmineInvoices
           end if invoice.tax_amount_pst> 0
         end
 
+        lines << ['', '', '', '', label_with_currency(:field_invoice_line_tax_amount, invoice.currency) + ":", price_to_currency(invoice.tax_amount, invoice.currency, :converted => false, :symbol => false)]
         lines << ['', '', '', '', label_with_currency(:label_invoice_total, invoice.currency) + ":", price_to_currency(invoice.amount, invoice.currency, :converted => false, :symbol => false)]
 
         pdf.table lines, :width => pdf.bounds.width, :cell_style => {:padding => [-3, 5, 3, 5]}, :header => true do |t|
@@ -351,6 +352,7 @@ module RedmineInvoices
               end if invoice.tax_amount_pst> 0
             end
 
+			invoice_total << [label_with_currency(:field_invoice_line_tax_amount, invoice.currency) + ":", price_to_currency(invoice.tax_amount, invoice.currency, :converted => false, :symbol => false)]
             invoice_total << [label_with_currency(invoice.total_with_tax? ? :label_invoice_total_with_tax : :label_invoice_total, invoice.currency) + ":", price_to_currency(invoice.amount, invoice.currency, :converted => false, :symbol => false)]
 
             pdf.table invoice_total, :cell_style => {:padding => [-3, 5, 3, 5], :borders => []} do |t|

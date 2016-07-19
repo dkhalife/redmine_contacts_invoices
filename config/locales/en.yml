@@ -24,6 +24,7 @@ en:
   label_invoice_total: Total
   label_invoice_tax_gst: GST
   label_invoice_tax_pst: PST
+  label_invoice_tax: Taxes
   label_invoice_sub_amount: Sub total
   label_invoice_invoiced: Invoiced
   label_invoice_add_line: Add line
@@ -64,8 +65,7 @@ en:
   field_invoice_line_quantity: Qty
   field_invoice_line_tax_gst: GST
   field_invoice_line_tax_pst: QST
-  field_invoice_line_tax_amount_gst: Tax amount (GST)
-  field_invoice_line_tax_amount_pst: Tax amount (PST)
+  field_invoice_line_tax_amount: Taxes
   field_invoice_line_total: Total
   field_invoice_line_units: Units
   
