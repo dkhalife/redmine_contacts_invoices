@@ -17,6 +17,7 @@
   <th><%= l(:field_invoice_line_tax_pst) %></th>
   <% end %>
   <th class="total"><%= label_with_currency(:label_invoice_total, invoice.currency) %></th>
+  <th>&nbsp;</th>
 </tr>
 </thead>
 <% @invoice_lines.each do |line| %>
