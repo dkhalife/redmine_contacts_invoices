@@ -24,7 +24,7 @@ en:
   label_invoice_total: Total
   label_invoice_tax_gst: GST
   label_invoice_tax_pst: PST
-  label_invoice_tax: Taxes
+  label_invoice_tax: Total taxes
   label_invoice_sub_amount: Sub total
   label_invoice_invoiced: Invoiced
   label_invoice_add_line: Add line

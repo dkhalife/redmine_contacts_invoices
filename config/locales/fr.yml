@@ -21,7 +21,7 @@ fr:
   label_invoice_total: Total
   label_invoice_tax_gst: TPS
   label_invoice_tax_pst: TVQ
-  label_invoice_tax: Taxes
+  label_invoice_tax: Total des taxes
   label_invoice_sub_amount: Sous-total
   label_invoice_invoiced: Facturée
   label_invoice_add_line: Ajouter une ligne
