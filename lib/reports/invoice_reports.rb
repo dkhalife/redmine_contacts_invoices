@@ -192,20 +192,20 @@ module RedmineInvoices
         if InvoicesSettings.discount_after_tax?
           lines << ['', '', '', '', l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
           invoice.tax_groups_gst.each do |tax_group|
-            lines << ['', '', '', '', "#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+            lines << ['', '', '', '', "#{l(:field_invoice_line_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
           end if invoice.tax_amount_gst> 0
           invoice.tax_groups_pst.each do |tax_group|
-            lines << ['', '', '', '', "#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+            lines << ['', '', '', '', "#{l(:field_invoice_line_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
           end if invoice.tax_amount_pst> 0
           lines << ['', '', '', '', discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
         else
           lines << ['', '', '', '', discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
           lines << ['', '', '', '', l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
           invoice.tax_groups_gst.each do |tax_group|
-            lines << ['', '', '', '', "#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+            lines << ['', '', '', '', "#{l(:field_invoice_line_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
           end if invoice.tax_amount_gst> 0
 		  invoice.tax_groups_pst.each do |tax_group|
-            lines << ['', '', '', '', "#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+            lines << ['', '', '', '', "#{l(:field_invoice_line_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
           end if invoice.tax_amount_pst> 0
         end
 
@@ -334,20 +334,20 @@ module RedmineInvoices
             if InvoicesSettings.discount_after_tax?
               invoice_total << [l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
               invoice.tax_groups_gst.each do |tax_group|
-                invoice_total << ["#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+                invoice_total << ["#{l(:field_invoice_line_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
               end if invoice.tax_amount_gst> 0
               invoice.tax_groups_pst.each do |tax_group|
-                invoice_total << ["#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+                invoice_total << ["#{l(:field_invoice_line_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
               end if invoice.tax_amount_pst> 0
               invoice_total << [discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
             else
               invoice_total << [discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
               invoice_total << [l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
               invoice.tax_groups_gst.each do |tax_group|
-                invoice_total << ["#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+                invoice_total << ["#{l(:field_invoice_line_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
               end if invoice.tax_amount_gst> 0
               invoice.tax_groups_pst.each do |tax_group|
-                invoice_total << ["#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+                invoice_total << ["#{l(:field_invoice_line_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
               end if invoice.tax_amount_pst> 0
             end
 
