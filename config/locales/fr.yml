@@ -19,7 +19,8 @@ fr:
   label_invoice_bill_info: Destinataire
   label_invoice_units: Unités
   label_invoice_total: Total
-  label_invoice_tax: Taxe
+  label_invoice_tax_gst: TPS
+  label_invoice_tax_pst: TVQ
   label_invoice_sub_amount: Sous-total
   label_invoice_invoiced: Facturée
   label_invoice_add_line: Ajouter une ligne
@@ -58,7 +59,8 @@ fr:
   field_invoice_line_description: Description
   field_invoice_line_price: Prix unitaire
   field_invoice_line_quantity: Qté
-  field_invoice_line_tax: Taxe
+  field_invoice_line_tax_gst: TPS
+  field_invoice_line_tax_pst: TVQ
   field_invoice_line_tax_amount: Montant de taxe
   field_invoice_line_total: Total
   field_invoice_line_units: Unité
