@@ -21,7 +21,7 @@ class InvoiceLine < ActiveRecord::Base
   unloadable
   include Redmine::SafeAttributes
 
-  attr_accessible :description, :price, :quantity, :tax, :units, :position, :invoice_id, :discount, :custom_field_values
+  attr_accessible :description, :price, :quantity, :tax_gst, :tax_pst, :units, :position, :invoice_id, :discount, :custom_field_values
 
   belongs_to :invoice
 
@@ -44,8 +44,16 @@ class InvoiceLine < ActiveRecord::Base
     self.price.to_f * self.quantity.to_f * (1 - self.discount.to_f/100)
   end
 
+  def tax_amount_gst
+    (ContactsSetting.tax_exclusive? ? self.tax_exclusive_gst : self.tax_inclusive)
+  end
+  
+  def tax_amount_pst
+    (ContactsSetting.tax_exclusive? ? self.tax_exclusive_pst : self.tax_inclusive)
+  end
+  
   def tax_amount
-    (ContactsSetting.tax_exclusive? ? self.tax_exclusive : self.tax_inclusive)
+	self.tax_amount_gst + self.tax_amount_pst
   end
 
   def price=(pr)
@@ -56,8 +64,12 @@ class InvoiceLine < ActiveRecord::Base
     super q.to_s.gsub(/,/,'.')
   end
 
-  def tax_to_s
-    tax ? "#{"%.2f" % tax.to_f}%": ""
+  def tax_gst_to_s
+    tax_gst ? "#{"%.2f" % tax_gst.to_f}%": ""
+  end
+  
+  def tax_pst_to_s
+    tax_pst ? "#{"%.2f" % tax_pst.to_f}%": ""
   end
 
   def discount_to_s
@@ -68,8 +80,12 @@ class InvoiceLine < ActiveRecord::Base
     total * (1 - (1/(1+tax.to_f/100)))
   end
 
-  def tax_exclusive
-    total * tax.to_f/100
+  def tax_exclusive_gst
+    total * tax_gst.to_f/100
+  end
+  
+  def tax_exclusive_pst
+    total * tax_pst.to_f/100
   end
 
   def line_description

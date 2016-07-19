@@ -28,8 +28,10 @@ api.invoice do
         api.position invoice_line.position
         api.quantity invoice_line.quantity
         api.description invoice_line.description
-        api.tax invoice_line.tax
-        api.tax_amount invoice_line.tax_amount
+        api.tax_gst invoice_line.tax
+        api.tax_pst invoice_line.tax
+        api.tax_amount_gst invoice_line.tax_amount_gst
+        api.tax_amount_pst invoice_line.tax_amount_pst
         api.price invoice_line.price
         api.units invoice_line.units
         api.total invoice_line.total

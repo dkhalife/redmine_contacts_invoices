@@ -90,7 +90,7 @@ class Invoice < ActiveRecord::Base
 
   acts_as_watchable
   acts_as_attachable
-  acts_as_priceable :amount, :tax_amount, :discount_amount, :balance, :remaining_balance
+  acts_as_priceable :amount, :tax_amount_gst, :tax_amount_pst, :discount_amount, :balance, :remaining_balance
 
   before_save :calculate_amount
   before_save :default_values
@@ -183,10 +183,18 @@ class Invoice < ActiveRecord::Base
   end
   alias_method :calculate, :calculate_amount
 
-  def tax_amount
-    self.lines.inject(0){|sum,x| sum + x.tax_amount * discount_rate}.to_f
+  def tax_amount_gst
+    self.lines.inject(0){|sum,x| sum + x.tax_amount_gst * discount_rate}.to_f
   end
 
+  def tax_amount_pst
+    self.lines.inject(0){|sum,x| sum + x.tax_amount_pst * discount_rate}.to_f
+  end
+  
+  def tax_amount
+    self.tax_amount_gst + self.tax_amount_pst
+  end
+  
   def subtotal
     if InvoicesSettings.discount_after_tax?
       self.lines.inject(0){|sum,x| sum + x.total}.to_f
@@ -215,10 +223,14 @@ class Invoice < ActiveRecord::Base
     read_attribute(:discount).to_f
   end
 
-  def tax_groups
-    self.lines.select{|l| !l.tax.blank? && l.tax.to_f > 0}.group_by{|l| l.tax}.map{|k, v| [k, v.sum{|l| l.tax_amount.to_f * discount_rate}] }
+  def tax_groups_gst
+    self.lines.select{|l| !l.tax_gst.blank? && l.tax_gst.to_f > 0}.group_by{|l| l.tax_gst}.map{|k, v| [k, v.sum{|l| l.tax_amount_gst.to_f * discount_rate}] }
   end
 
+  def tax_groups_pst
+    self.lines.select{|l| !l.tax_pst.blank? && l.tax_pst.to_f > 0}.group_by{|l| l.tax_pst}.map{|k, v| [k, v.sum{|l| l.tax_amount_pst.to_f * discount_rate}] }
+  end
+  
   def visible?(usr=nil)
     (usr || User.current).allowed_to?(:view_invoices, self.project)
   end
@@ -311,7 +323,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def has_taxes?
-    !self.lines.map(&:tax).all?{|t| t == 0 || t.blank?}
+    !self.lines.map(&:tax_gst).all?{|t| t == 0 || t.blank?} || !self.lines.map(&:tax_pst).all?{|t| t == 0 || t.blank?}
   end
 
   def has_units?
@@ -371,7 +383,8 @@ class Invoice < ActiveRecord::Base
         new_line = self.lines.new
         new_line.position = line.position if line.respond_to?(:position) && line.position
         new_line.description = line.description if line.respond_to?(:description) && line.description.present?
-        new_line.tax = line.tax if line.respond_to?(:tax) && line.tax
+        new_line.tax_gst = line.tax_gst if line.respond_to?(:tax_gst) && line.tax_gst
+        new_line.tax_pst = line.tax_pst if line.respond_to?(:tax_pst) && line.tax_pst
         new_line.quantity = line.quantity if line.respond_to?(:quantity) && line.quantity
         new_line.discount = line.discount if line.respond_to?(:discount) && line.discount
         new_line.price = line.price.to_f * (1 - new_line.discount.to_f / 100) if line.respond_to?(:price)

@@ -52,16 +52,20 @@ function updateInvoiceTotal(element) {
   rows.each(function(index) {
     var qty_input = $("td.quantity input", this);
     var price_input = $("td.price input", this);
-    var tax_input = $("td.tax input[type=\"text\"]", this);
+    var tax_gst_input = $("td.tax.gst input[type=\"text\"]", this);
+    var tax_pst_input = $("td.tax.pst input[type=\"text\"]", this);
 
     var qty = qty_input.val();
     var price = price_input.val();
     var amount = price * qty;
-    var tax = amount / 100 * tax_input.val();
+    var tax_gst = amount / 100 * tax_gst_input.val();
+    var tax_pst = amount / 100 * tax_pst_input.val();
     var subtotal = amount;
-    subtotal += tax;
+    subtotal += tax_gst;
+    subtotal += tax_pst;
 
-    tax = tax.toFixed(2); // limit to two decimal places
+    tax_gst = tax_gst.toFixed(3); // limit to two decimal places
+    tax_pst = tax_pst.toFixed(3); // limit to two decimal places
     amount = amount.toFixed(2);
     subtotal = subtotal.toFixed(2);
 

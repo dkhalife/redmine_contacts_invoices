@@ -13,7 +13,8 @@
   <% end %>
   <th class="price"><%= label_with_currency(:field_invoice_line_price, invoice.currency) %></th>
   <% if invoice.has_taxes?  %>
-  <th><%= l(:field_invoice_line_tax) %></th>
+  <th><%= l(:field_invoice_line_tax_gst) %></th>
+  <th><%= l(:field_invoice_line_tax_pst) %></th>
   <% end %>
   <th class="total"><%= label_with_currency(:label_invoice_total, invoice.currency) %></th>
 </tr>
@@ -22,7 +23,7 @@
   <%= render :partial => 'invoices/line_row', :locals => {:line => line, :invoice => invoice} %>
 <% end %>
 
-<% colspan = 4 + (InvoicesSettings.show_units? ? 1 : 0) + (invoice.has_taxes? ? 1 : 0) + InvoiceLine.new.available_custom_fields.size %>
+<% colspan = 4 + (InvoicesSettings.show_units? ? 1 : 0) + (invoice.has_taxes? ? 2 : 0) + InvoiceLine.new.available_custom_fields.size %>
 
 <tr class="total delimiter"><th></th></tr>
 <tr class="total">
@@ -37,13 +38,19 @@
     <th class="total_amount"><%= price_to_currency(invoice.subtotal, invoice.currency) %></th>
   </tr>
   <% end %>
-  <% invoice.tax_groups.each do |tax_group| %>
-  <tr class="total tax">
-    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax)} (#{tax_group[0]}%)" %>:</th>
+  <% invoice.tax_groups_gst.each do |tax_group| %>
+  <tr class="total tax gst">
+    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax_gst)} (#{tax_group[0]}%)" %>:</th>
     <th class="total_amount"> <%= price_to_currency(tax_group[1], invoice.currency)  %></th>
   </tr>
-  <% end if invoice.tax_amount> 0 %>
-
+  <% end if invoice.tax_amount_gst> 0 %>
+  <% invoice.tax_groups_pst.each do |tax_group| %>
+  <tr class="total tax pst">
+    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax_pst)} (#{tax_group[0]}%)" %>:</th>
+    <th class="total_amount"> <%= price_to_currency(tax_group[1], invoice.currency)  %></th>
+  </tr>
+  <% end if invoice.tax_amount_pst> 0 %>
+  
   <% if invoice.discount > 0  %>
   <tr class="total">
     <th colspan="<%= colspan %>" class="total"><%= "#{l(:field_invoice_discount)} (#{invoice.discount.to_s}%)" %>:</th>
@@ -67,13 +74,19 @@
   </tr>
   <% end %>
 
-  <% invoice.tax_groups.each do |tax_group| %>
-  <tr class="total tax">
-    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax)} (#{tax_group[0]}%)" %>:</th>
+  <% invoice.tax_groups_gst.each do |tax_group| %>
+  <tr class="total tax gst">
+    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax_gst)} (#{tax_group[0]}%)" %>:</th>
     <th class="total_amount"> <%= price_to_currency(tax_group[1], invoice.currency)  %></th>
   </tr>
-  <% end if invoice.tax_amount> 0 %>
+  <% end if invoice.tax_amount_gst> 0 %>
 
+  <% invoice.tax_groups_pst.each do |tax_group| %>
+  <tr class="total tax pst">
+    <th colspan="<%= colspan%>" class="total"><%= "#{l(:label_invoice_tax_pst)} (#{tax_group[0]}%)" %>:</th>
+    <th class="total_amount"> <%= price_to_currency(tax_group[1], invoice.currency)  %></th>
+  </tr>
+  <% end if invoice.tax_amount_pst> 0 %>
 <% end %>
 
 <tr class="total">

@@ -85,7 +85,7 @@ class Expense < ActiveRecord::Base
   }
 
   validates_presence_of :price, :expense_date
-  validates_numericality_of :price, :tax, :allow_nil => true
+  validates_numericality_of :price, :tax_gst, :tax_pst, :allow_nil => true
 
   safe_attributes 'expense_date',
     'price',

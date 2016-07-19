@@ -10,7 +10,8 @@
   <% end %>
   <td class="price"><%= line.price_to_s %></td>
   <% if invoice.has_taxes?  %>
-  <td class="tax" title="<%= "#{l(:field_invoice_line_tax_amount)}: #{price_to_currency(line.tax_amount, invoice.currency)}" if line.tax %>"><%= line.tax.to_s + '%' if line.tax.to_f > 0.0 %></td>
+  <td class="tax gst" title="<%= "#{l(:field_invoice_line_tax_amount_gst)}: #{price_to_currency(line.tax_amount_gst, invoice.currency)}" if line.tax_gst %>"><%= line.tax_gst.to_s + '%' if line.tax_gst.to_f > 0.0 %></td>
+  <td class="tax pst" title="<%= "#{l(:field_invoice_line_tax_amount_pst)}: #{price_to_currency(line.tax_amount_qst, invoice.currency)}" if line.tax_pst %>"><%= line.tax_pst.to_s + '%' if line.tax_pst.to_f > 0.0 %></td>
   <% end %>
   <td class="total_price"><%= price_to_currency(line.total, invoice.currency) %></td>
 </tr>

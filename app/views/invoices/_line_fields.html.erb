@@ -18,10 +18,16 @@
     </div>
   </td>
   <% if !InvoicesSettings.disable_taxes?(@project) || (f.object.invoice.respond_to?(:has_taxes?) && f.object.invoice.has_taxes?)   %>
-  <td class="tax">
-    <% line_tax = (f.object.new_record? && f.object.tax.blank?) ? ContactsSetting.default_tax : f.object.tax %>
-    <%= check_box_tag :show_tax, "1", false, :onclick=>"$(this).hide(); $(this).parent().find('.tax-fields').show(); $(this).next().find('input').focus();  $(this).next().find('input').val('#{ContactsSetting.default_tax}'); return false;" if line_tax.blank? || line_tax == 0 %>
-    <span class="tax-fields" style="white-space: nowrap; <%= line_tax.blank? || line_tax == 0 ? "display:none;" : "" %>"><%= f.text_field :tax, :no_label => true, :size => 5, :value => line_tax %>&nbsp;%
+  <td class="tax gst">
+    <% line_tax_gst = (f.object.new_record? && f.object.tax_gst.blank?) ? ContactsSetting.default_tax_gst : f.object.tax_gst %>
+    <%= check_box_tag :show_tax, "1", false, :onclick=>"$(this).hide(); $(this).parent().find('.tax-fields').show(); $(this).next().find('input').focus();  $(this).next().find('input').val('#{ContactsSetting.default_tax_gst}'); return false;" if line_tax_gst.blank? || line_tax_gst == 0 %>
+    <span class="tax-fields" style="white-space: nowrap; <%= line_tax_gst.blank? || line_tax_gst == 0 ? "display:none;" : "" %>"><%= f.text_field :tax_gst, :no_label => true, :size => 5, :value => line_tax_gst %>&nbsp;%
+    </span>
+  </td>
+  <td class="tax pst">
+    <% line_tax_pst = (f.object.new_record? && f.object.tax_pst.blank?) ? ContactsSetting.default_tax_pst : f.object.tax_pst %>
+    <%= check_box_tag :show_tax, "1", false, :onclick=>"$(this).hide(); $(this).parent().find('.tax-fields').show(); $(this).next().find('input').focus();  $(this).next().find('input').val('#{ContactsSetting.default_tax_pst}'); return false;" if line_tax_pst.blank? || line_tax_pst == 0 %>
+    <span class="tax-fields" style="white-space: nowrap; <%= line_tax_pst.blank? || line_tax_pst == 0 ? "display:none;" : "" %>"><%= f.text_field :tax_pst, :no_label => true, :size => 5, :value => line_tax_pst %>&nbsp;%
     </span>
   </td>
   <% end %>
