@@ -68,7 +68,10 @@ en:
   field_invoice_line_tax_amount_pst: Tax amount (PST)
   field_invoice_line_total: Total
   field_invoice_line_units: Units
-
+  
+  field_invoice_status_draft: Draft
+  field_invoice_status_paid: Paid
+  
   #0.0.3
   label_invoice_company_logo_url: Company logo (URL)
 

@@ -146,10 +146,10 @@ module RedmineInvoices
       def status_stamp(pdf, invoice)
         case invoice.status_id
         when Invoice::DRAFT_INVOICE
-          stamp_text = "DRAFT"
+          stamp_text = l(:field_invoice_status_draft)
           stamp_color = "993333"
         when Invoice::PAID_INVOICE
-          stamp_text = "PAID"
+          stamp_text = l(:field_invoice_status_paid)
           stamp_color = "1e9237"
         else
           stamp_text = ""
@@ -157,7 +157,7 @@ module RedmineInvoices
         end
 
         stamp_text_width = pdf.width_of(stamp_text, :font => "Times-Roman", :style => :bold, :size => 120)
-        pdf.create_stamp("draft") do
+        pdf.create_stamp("stamp") do
           pdf.rotate(30, :origin => [0, 50]) do
             pdf.fill_color stamp_color
             pdf.font("Times-Roman", :style => :bold, :size => 120) do
@@ -167,7 +167,7 @@ module RedmineInvoices
           end
         end
 
-        pdf.stamp_at "draft", [(pdf.bounds.width / 2) - stamp_text_width / 2, (pdf.bounds.height / 2) ] unless stamp_text.blank?
+        pdf.stamp_at "stamp", [(pdf.bounds.width / 2) - stamp_text_width / 2, (pdf.bounds.height / 2) ] unless stamp_text.blank?
       end
 
       def classic_table(pdf, invoice)
