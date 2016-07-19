@@ -61,15 +61,10 @@ function updateInvoiceTotal(element) {
     var tax_gst = amount / 100 * tax_gst_input.val();
     var tax_pst = amount / 100 * tax_pst_input.val();
     var subtotal = amount;
-    subtotal += tax_gst;
-    subtotal += tax_pst;
-
-    tax_gst = tax_gst.toFixed(3); // limit to two decimal places
-    tax_pst = tax_pst.toFixed(3); // limit to two decimal places
-    amount = amount.toFixed(2);
-    subtotal = subtotal.toFixed(2);
-
-    $(this).children("td.total").html(amount)
+    amount += tax_gst;
+    amount += tax_pst;
+	
+    $(this).children("td.total").html(amoun.toFixed(2)t)
 
   });
 

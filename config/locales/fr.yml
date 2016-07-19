@@ -64,8 +64,8 @@ fr:
   field_invoice_line_total: Total
   field_invoice_line_units: Unité
 
-  field_invoice_status_draft: Brouillon
-  field_invoice_status_paid: Payée
+  field_invoice_status_draft: BROUILLON
+  field_invoice_status_paid: PAYÉE
   
 # in case of need
 

@@ -65,11 +65,11 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def tax_gst_to_s
-    tax_gst ? "#{"%.2f" % tax_gst.to_f}%": ""
+    tax_gst ? "#{"%.3f" % tax_gst.to_f}%": ""
   end
   
   def tax_pst_to_s
-    tax_pst ? "#{"%.2f" % tax_pst.to_f}%": ""
+    tax_pst ? "#{"%.3f" % tax_pst.to_f}%": ""
   end
 
   def discount_to_s
