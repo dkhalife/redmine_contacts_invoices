@@ -13,8 +13,8 @@
   <% end %>
   <th class="price"><%= label_with_currency(:field_invoice_line_price, invoice.currency) %></th>
   <% if invoice.has_taxes?  %>
-  <th><%= l(:field_invoice_line_tax_gst) %></th>
-  <th><%= l(:field_invoice_line_tax_pst) %></th>
+  <th><%= label_with_currency(:field_invoice_line_tax_gst, invoice.currency) %></th>
+  <th><%= label_with_currency(:field_invoice_line_tax_pst, invoice.currency) %></th>
   <% end %>
   <th class="total"><%= label_with_currency(:label_invoice_total, invoice.currency) %></th>
 </tr>
