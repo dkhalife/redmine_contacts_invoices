@@ -56,7 +56,9 @@ module RedmineInvoices
             :Creator => InvoicesSettings[:invoices_company_name, invoice.project].to_s,
             :CreationDate => Time.now,
             :TotalAmount => price_to_currency(invoice.amount, invoice.currency, :converted => false, :symbol => false),
-            :TaxAmount => price_to_currency(invoice.tax_amount, invoice.currency, :converted => false, :symbol => false),
+            :TaxAmountGST => price_to_currency(invoice.tax_amount_gst, invoice.currency, :converted => false, :symbol => false),
+            :TaxAmountPST => price_to_currency(invoice.tax_amount_pst, invoice.currency, :converted => false, :symbol => false),
+			:TaxAmount => price_to_currency(invoice.tax_amount, invoice.currency, :converted => false, :symbol => false),
             :Discount => price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)
             },
             :margin => [50, 50, 60, 50])
@@ -189,16 +191,22 @@ module RedmineInvoices
 
         if InvoicesSettings.discount_after_tax?
           lines << ['', '', '', '', l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
-          invoice.tax_groups.each do |tax_group|
-            lines << ['', '', '', '', "#{l(:label_invoice_tax)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
-          end if invoice.tax_amount> 0
+          invoice.tax_groups_gst.each do |tax_group|
+            lines << ['', '', '', '', "#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+          end if invoice.tax_amount_gst> 0
+          invoice.tax_groups_pst.each do |tax_group|
+            lines << ['', '', '', '', "#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+          end if invoice.tax_amount_pst> 0
           lines << ['', '', '', '', discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
         else
           lines << ['', '', '', '', discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
           lines << ['', '', '', '', l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
-          invoice.tax_groups.each do |tax_group|
-            lines << ['', '', '', '', "#{l(:label_invoice_tax)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
-          end if invoice.tax_amount> 0
+          invoice.tax_groups_gst.each do |tax_group|
+            lines << ['', '', '', '', "#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+          end if invoice.tax_amount_gst> 0
+		  invoice.tax_groups_pst.each do |tax_group|
+            lines << ['', '', '', '', "#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+          end if invoice.tax_amount_pst> 0
         end
 
         lines << ['', '', '', '', label_with_currency(:label_invoice_total, invoice.currency) + ":", price_to_currency(invoice.amount, invoice.currency, :converted => false, :symbol => false)]
@@ -246,7 +254,9 @@ module RedmineInvoices
             :Creator => InvoicesSettings[:invoices_company_name, invoice.project].to_s,
             :CreationDate => Time.now,
             :TotalAmount => price_to_currency(invoice.amount, invoice.currency, :converted => false, :symbol => false),
-            :TaxAmount => price_to_currency(invoice.tax_amount, invoice.currency, :converted => false, :symbol => false),
+            :TaxAmountGST => price_to_currency(invoice.tax_amount_gst, invoice.currency, :converted => false, :symbol => false),
+            :TaxAmountPST => price_to_currency(invoice.tax_amount_pst, invoice.currency, :converted => false, :symbol => false),
+			:TaxAmount => price_to_currency(invoice.tax_amount, invoice.currency, :converted => false, :symbol => false),
             :Discount => price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)
             },
             :margin => [50, 50, 60, 50])
@@ -323,16 +333,22 @@ module RedmineInvoices
 
             if InvoicesSettings.discount_after_tax?
               invoice_total << [l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
-              invoice.tax_groups.each do |tax_group|
-                invoice_total << ["#{l(:label_invoice_tax)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
-              end if invoice.tax_amount> 0
+              invoice.tax_groups_gst.each do |tax_group|
+                invoice_total << ["#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+              end if invoice.tax_amount_gst> 0
+              invoice.tax_groups_pst.each do |tax_group|
+                invoice_total << ["#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+              end if invoice.tax_amount_pst> 0
               invoice_total << [discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
             else
               invoice_total << [discount_label(invoice) + ":", "-" + price_to_currency(invoice.discount_amount, invoice.currency, :converted => false, :symbol => false)] if invoice.discount_amount > 0
               invoice_total << [l(:label_invoice_sub_amount) + ":", price_to_currency(invoice.subtotal, invoice.currency, :converted => false, :symbol => false)]  if invoice.discount_amount > 0 || (invoice.tax_amount> 0 && !invoice.total_with_tax?)
-              invoice.tax_groups.each do |tax_group|
-                invoice_total << ["#{l(:label_invoice_tax)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
-              end if invoice.tax_amount> 0
+              invoice.tax_groups_gst.each do |tax_group|
+                invoice_total << ["#{l(:label_invoice_tax_gst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+              end if invoice.tax_amount_gst> 0
+              invoice.tax_groups_pst.each do |tax_group|
+                invoice_total << ["#{l(:label_invoice_tax_pst)} (#{invoice_number_format(tax_group[0])}%):", price_to_currency(tax_group[1], invoice.currency, :converted => false, :symbol => false)]
+              end if invoice.tax_amount_pst> 0
             end
 
             invoice_total << [label_with_currency(invoice.total_with_tax? ? :label_invoice_total_with_tax : :label_invoice_total, invoice.currency) + ":", price_to_currency(invoice.amount, invoice.currency, :converted => false, :symbol => false)]
