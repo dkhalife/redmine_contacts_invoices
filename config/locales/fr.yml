@@ -62,7 +62,7 @@ fr:
   field_invoice_line_quantity: Qté
   field_invoice_line_tax_gst: TPS
   field_invoice_line_tax_pst: TVQ
-  field_invoice_line_tax_amount: Taxes
+  field_invoice_line_tax_amount: Total des taxes
   field_invoice_line_total: Total
   field_invoice_line_units: Unité
 
