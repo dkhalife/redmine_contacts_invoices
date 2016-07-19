@@ -104,7 +104,7 @@
   <table class="invoice-lines form">
     <tr>
       <!-- <th class="sort"></th> -->
-      <th colspan="2"><%= l(:field_invoice_line_description) %></th>
+      <th><%= l(:field_invoice_line_description) %></th>
       <% InvoiceLine.new.available_custom_fields.each do |cf| %>
         <th><%= cf.name %></th>
       <% end %>
