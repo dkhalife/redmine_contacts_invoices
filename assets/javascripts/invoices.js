@@ -64,7 +64,7 @@ function updateInvoiceTotal(element) {
     amount += tax_gst;
     amount += tax_pst;
 	
-    $(this).children("td.total").html(amoun.toFixed(2)t)
+    $(this).children("td.total").html(amount.toFixed(2))
 
   });
 
