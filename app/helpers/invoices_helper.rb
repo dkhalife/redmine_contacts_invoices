@@ -359,7 +359,7 @@ module InvoicesHelper
 
   def paypal_code(invoice)
     url = "https://www.paypal.com/cgi-bin/webscr?business=#{InvoicesSettings['invoices_paypal_account', @project]}&cmd=_xclick&currency_code=#{invoice.currency}&amount=#{invoice.amount.to_f}&item_name=#{paypal_item_name(invoice)}"
-    img_src = "https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif"
+    img_src = "https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg"
     "<a href='#{url}'><img src='#{img_src}'></img></a>"
   end
 
