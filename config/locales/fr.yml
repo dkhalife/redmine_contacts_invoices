@@ -199,3 +199,6 @@ fr:
   #3.1.1
   label_invoice_hours: heures
   label_invoice_email_curent_user: Votre email
+  
+  terms_and_conditions: Termes et Conditions
+  terms_and_conditions_text: 1. Un dépôt non remboursable de 30% est exigé afin de débuter les travaux nécessaires.\r\n2. Tout retard de paiement de facture sera pénalisé avec des intérêts cumulatifs de 15% par tranche de 30 jours de retard.\r\n 3. Dans la situation où votre paiement par chèque est refusé par la banque pour n'importe quelle raison, des frais administratifs de 100$ vous seront chargés en supplément sur votre facture.
