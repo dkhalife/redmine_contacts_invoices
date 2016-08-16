@@ -251,4 +251,4 @@ en:
   label_invoices_invoice_line: Invoice lines
   
   terms_and_conditions: Terms and Conditions
-  terms_and_conditions_text: 1. A non refundable deposit of 30% is required to start the needed work. \r\n2. Any delay in payment will result in cumulative penalties at the interest rate of 15% for each 30 days of late payment. \r\n 3. In the event where your check is refused for any reason by the bank, an extra administrative fee of $100 will be charged on your invoice.
+  terms_and_conditions_text: "1. A non refundable deposit of 30% is required to start the needed work. \r\n2. Any delay in payment will result in cumulative penalties at the interest rate of 15% for each 30 days of late payment. \r\n 3. In the event where your check is refused for any reason by the bank, an extra administrative fee of $100 will be charged on your invoice."
