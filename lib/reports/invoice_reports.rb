@@ -135,7 +135,6 @@ module RedmineInvoices
         pdf.move_down(10)
         pdf.text invoice.description
         pdf.move_down(10)
-		pdf.draw_text ""
 		
 		pdf.text([
 			{ 
