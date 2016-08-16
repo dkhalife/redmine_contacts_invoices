@@ -134,17 +134,10 @@ module RedmineInvoices
         end
         pdf.move_down(10)
         pdf.text invoice.description
-        pdf.move_down(10)
-		
-		pdf.text([
-			{ 
-				:text => l(:terms_and_conditions),
-				:style => [:bold, :italic] 
-			},
-			{ 
-				:text => l(:terms_and_conditions_text)
-			},
-		])
+
+        pdf.move_down(30)
+	pdf.text l(:terms_and_conditions) 
+	pdf.text l(:terms_and_conditions_text)
 		
         pdf.number_pages "<page>/<total>", {:at => [pdf.bounds.right - 150, -10], :width => 150,
                   :align => :right} if pdf.page_number > 1
